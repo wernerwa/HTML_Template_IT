@@ -1088,9 +1088,12 @@ class HTML_Template_IT
         $content = fread($fh, $fsize);
         fclose($fh);
 
+        $that = $this;
         return preg_replace_callback(
             "#<!-- INCLUDE (.*) -->#im",
-            function ($m) { return $this->getFile($m[1]); },
+            function ($m) use ($that) {
+                return $that->getFile($m[1]);
+            },
             $content
         );
     } // end func getFile
